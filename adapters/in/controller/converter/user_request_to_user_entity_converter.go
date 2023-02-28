@@ -10,5 +10,5 @@ func FromUserRequestToUserEntity(userRequest models.UserRequest) (*entity.User, 
 	if err != nil {
 		return nil, err
 	}
-	return entity.NewUser(userRequest.Name, userRequest.LastName, userRequest.Cellphone, *&entity.Address{}, date), nil
+	return entity.NewUser(userRequest.Name, userRequest.LastName, userRequest.Cellphone, entity.Address{}, date), nil
 }
