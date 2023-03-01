@@ -7,3 +7,23 @@ type UserRequest struct {
 	Cellphone string `json:"cellphone"`
 	Cep       string `json:"cep"`
 }
+
+func (u *UserRequest) GetName() string {
+	return u.Name
+}
+
+func (u *UserRequest) GetLastName() string {
+	return u.LastName
+}
+
+func (u *UserRequest) GetBirthday() string {
+	return u.Birthday
+}
+
+func (u *UserRequest) GetCellphone() string {
+	return u.Cellphone
+}
+
+func (u *UserRequest) GetCep() string {
+	return u.Cep
+}

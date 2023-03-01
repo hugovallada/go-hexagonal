@@ -8,3 +8,26 @@ type AddressResponse struct {
 	Cidade      string `json:"localidade"`
 	Estado      string `json:"uf"`
 }
+
+func (ar AddressResponse) GetCep() string {
+	return ar.Cep
+}
+
+func (ar AddressResponse) GetRua() string {
+	return ar.Rua
+}
+
+func (ar AddressResponse) GetComplemento() string {
+	return ar.Complemento
+}
+
+func (ar AddressResponse) GetBairro() string {
+	return ar.Bairro
+}
+
+func (ar AddressResponse) GetCidade() string {
+	return ar.Cidade
+}
+func (ar AddressResponse) GetEstado() string {
+	return ar.Estado
+}

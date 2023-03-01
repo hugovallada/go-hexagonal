@@ -3,6 +3,8 @@ package usecase
 import (
 	"context"
 
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto/converter"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/ports/out"
 )
@@ -19,14 +21,19 @@ func NewCreateUserUseCase(getAddressByCepOutputPort out.GetAddressByCepOutputPor
 	}
 }
 
-func (u *CreateUserUseCase) Execute(ctx context.Context, user entity.User, cep string) (*entity.User, error) {
-	address, err := u.getAddressByCepOutputPort.Execute(ctx, cep)
+func (u *CreateUserUseCase) Execute(ctx context.Context, newUser dto.NewUser) (*entity.User, error) {
+	user, err := converter.FromNewUserDtoToUser(newUser)
 	if err != nil {
 		return nil, err
 	}
-	user.AddAddress(*address)
-	if err := u.persistUserInDatabaseOutputPort.Execute(ctx, user); err != nil {
+	addressFromCep, err := u.getAddressByCepOutputPort.Execute(ctx, newUser.GetCep())
+	if err != nil {
 		return nil, err
 	}
-	return &user, nil
+	address := converter.FromAddressFromCepToAddress(addressFromCep)
+	user.AddAddress(address)
+	if err := u.persistUserInDatabaseOutputPort.Execute(ctx, *user); err != nil {
+		return nil, err
+	}
+	return user, nil
 }

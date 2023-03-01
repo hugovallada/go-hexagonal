@@ -6,9 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/hugovallada/golang-hexagonal-architecture/adapters/out/client/converter"
 	clientResp "github.com/hugovallada/golang-hexagonal-architecture/adapters/out/client/response"
-	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
 )
 
 const (
@@ -17,7 +16,7 @@ const (
 
 type GetAddressByCepAdapter struct{}
 
-func (a *GetAddressByCepAdapter) Execute(ctx context.Context, cep string) (*entity.Address, error) {
+func (a *GetAddressByCepAdapter) Execute(ctx context.Context, cep string) (dto.AddressFromCep, error) {
 	request, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://viacep.com.br/ws/%s/json/", cep), nil)
 	if err != nil {
 		return nil, err
@@ -26,11 +25,10 @@ func (a *GetAddressByCepAdapter) Execute(ctx context.Context, cep string) (*enti
 	if err != nil {
 		return nil, err
 	}
-	var addressResponse clientResp.AddressResponse
-	err = json.NewDecoder(response.Body).Decode(&addressResponse)
+	var address clientResp.AddressResponse
+	err = json.NewDecoder(response.Body).Decode(&address)
 	if err != nil {
 		return nil, err
 	}
-	address := converter.FromAddressResponseToAddress(addressResponse)
-	return &address, nil
+	return address, nil
 }
