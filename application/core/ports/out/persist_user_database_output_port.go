@@ -1,7 +1,11 @@
 package out
 
-import "github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
+import (
+	"context"
+
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
+)
 
 type PersistUserInDatabaseOutputPort interface {
-	Execute(user entity.User) error
+	Execute(ctx context.Context, user entity.User) error
 }

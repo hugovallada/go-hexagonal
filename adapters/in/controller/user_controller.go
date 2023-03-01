@@ -32,7 +32,7 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(400, "birthday in invalid format")
 		return
 	}
-	user, err = c.createUserInputPort.Execute(*user, userRequest.Cep)
+	user, err = c.createUserInputPort.Execute(ctx, *user, userRequest.Cep)
 	if err != nil {
 		ctx.AbortWithStatusJSON(500, "error while creating the new user")
 		return

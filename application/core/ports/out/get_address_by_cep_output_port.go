@@ -1,7 +1,11 @@
 package out
 
-import "github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
+import (
+	"context"
+
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
+)
 
 type GetAddressByCepOutputPort interface {
-	Execute(cep string) (entity.Address, error)
+	Execute(ctx context.Context, cep string) (*entity.Address, error)
 }
