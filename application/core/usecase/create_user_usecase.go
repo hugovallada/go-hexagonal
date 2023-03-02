@@ -5,7 +5,6 @@ import (
 
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto/converter"
-	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/ports/out"
 )
 
@@ -21,7 +20,7 @@ func NewCreateUserUseCase(getAddressByCepOutputPort out.GetAddressByCepOutputPor
 	}
 }
 
-func (u *CreateUserUseCase) Execute(ctx context.Context, receivedUser dto.NewUser) (*entity.User, error) {
+func (u *CreateUserUseCase) Execute(ctx context.Context, receivedUser dto.NewUser) (dto.UserEntity, error) {
 	user, err := converter.FromNewUserDtoToUser(receivedUser)
 	if err != nil {
 		return nil, err

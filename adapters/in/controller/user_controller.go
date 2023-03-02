@@ -31,5 +31,5 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(500, "error while creating the new user")
 		return
 	}
-	ctx.JSON(201, *user)
+	ctx.JSON(201, user)
 }
