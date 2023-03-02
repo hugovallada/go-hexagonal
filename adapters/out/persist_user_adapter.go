@@ -2,7 +2,6 @@ package out
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hugovallada/golang-hexagonal-architecture/adapters/out/repository"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
@@ -15,6 +14,5 @@ type PersistUserAdapter struct {
 
 func (a *PersistUserAdapter) Execute(ctx context.Context, user dto.UserEntity) error {
 	err := repository.CreateUser(ctx, a.Mongodb, user)
-	fmt.Println(err)
 	return err
 }
