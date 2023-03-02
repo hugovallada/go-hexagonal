@@ -10,29 +10,29 @@ import (
 )
 
 type CreateUserUseCase struct {
-	getAddressByCepOutputPort       out.GetAddressByCepOutputPort
-	persistUserInDatabaseOutputPort out.PersistUserInDatabaseOutputPort
+	getAddressByCepOutputPort out.GetAddressByCepOutputPort
+	persistUserOutputPort     out.PersistUserOutputPort
 }
 
-func NewCreateUserUseCase(getAddressByCepOutputPort out.GetAddressByCepOutputPort, persistUserInDatabaseOutputPort out.PersistUserInDatabaseOutputPort) *CreateUserUseCase {
+func NewCreateUserUseCase(getAddressByCepOutputPort out.GetAddressByCepOutputPort, persistUserOutputPort out.PersistUserOutputPort) *CreateUserUseCase {
 	return &CreateUserUseCase{
-		getAddressByCepOutputPort:       getAddressByCepOutputPort,
-		persistUserInDatabaseOutputPort: persistUserInDatabaseOutputPort,
+		getAddressByCepOutputPort: getAddressByCepOutputPort,
+		persistUserOutputPort:     persistUserOutputPort,
 	}
 }
 
-func (u *CreateUserUseCase) Execute(ctx context.Context, newUser dto.NewUser) (*entity.User, error) {
-	user, err := converter.FromNewUserDtoToUser(newUser)
+func (u *CreateUserUseCase) Execute(ctx context.Context, receivedUser dto.NewUser) (*entity.User, error) {
+	user, err := converter.FromNewUserDtoToUser(receivedUser)
 	if err != nil {
 		return nil, err
 	}
-	addressFromCep, err := u.getAddressByCepOutputPort.Execute(ctx, newUser.GetCep())
+	addressFromCep, err := u.getAddressByCepOutputPort.Execute(ctx, receivedUser.GetCep())
 	if err != nil {
 		return nil, err
 	}
 	address := converter.FromAddressFromCepToAddress(addressFromCep)
 	user.AddAddress(address)
-	if err := u.persistUserInDatabaseOutputPort.Execute(ctx, *user); err != nil {
+	if err := u.persistUserOutputPort.Execute(ctx, user); err != nil {
 		return nil, err
 	}
 	return user, nil

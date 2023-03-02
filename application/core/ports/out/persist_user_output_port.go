@@ -1,0 +1,11 @@
+package out
+
+import (
+	"context"
+
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
+)
+
+type PersistUserOutputPort interface {
+	Execute(ctx context.Context, user dto.UserEntity) error
+}
