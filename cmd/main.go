@@ -8,7 +8,7 @@ import (
 	"github.com/hugovallada/golang-hexagonal-architecture/adapters/in/controller"
 	"github.com/hugovallada/golang-hexagonal-architecture/adapters/out"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/usecase"
-	"github.com/hugovallada/golang-hexagonal-architecture/config/routes"
+	"github.com/hugovallada/golang-hexagonal-architecture/configuration/routes"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
