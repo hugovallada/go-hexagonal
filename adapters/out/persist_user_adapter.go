@@ -19,8 +19,8 @@ type PersistUserAdapter struct {
 }
 
 func (a *PersistUserAdapter) Execute(ctx context.Context, user dto.UserEntity) error {
-	logger.Info("Persist User", zap.Any("execution", logger.NewLog[dto.UserEntity, error](logger.NewJourney("createUser", ""), "PersistUserAdapter.Execute()", FILENAME, "creating new user in the database", false, user, nil)))
+	logger.Info("Persist User", zap.Any("execution", logger.NewLog[dto.UserEntity, any, error](logger.NewJourney("createUser", ""), "PersistUserAdapter.Execute()", FILENAME, "creating new user in the database", false, user, nil, nil)))
 	err := repository.CreateUser(ctx, a.Mongodb, user)
-	logger.Info("Persist User", zap.Any("execution", logger.NewLog(logger.NewJourney("createUser", ""), "PersistUserAdapter.Execute()", FILENAME, "creating new user in the database", err != nil, user, err.Error())))
+	logger.Info("Persist User", zap.Any("execution", logger.NewLog(logger.NewJourney("createUser", ""), "PersistUserAdapter.Execute()", FILENAME, "creating new user in the database", err != nil, user, "", err)))
 	return err
 }

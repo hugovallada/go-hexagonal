@@ -1,13 +1,14 @@
 package logger
 
-type logValue[T, K any] struct {
+type logValue[T, K, V any] struct {
 	Journey      journey
 	Where        string
 	Method       string
-	What         string
+	Step         string
 	IsError      bool
 	EntryData    T
 	ResponseData K
+	ErrorData    V
 }
 
 type journey struct {
@@ -22,14 +23,15 @@ func NewJourney(flow, subFlow string) journey {
 	}
 }
 
-func NewLog[T, K any](journey journey, method, where, what string, isError bool, data T, dataResponse K) logValue[T, K] {
-	return logValue[T, K]{
+func NewLog[T, K, V any](journey journey, method, where, step string, isError bool, data T, dataResponse K, err V) logValue[T, K, V] {
+	return logValue[T, K, V]{
 		Journey:      journey,
 		Method:       method,
 		Where:        where,
-		What:         what,
+		Step:         step,
 		IsError:      isError,
 		EntryData:    data,
 		ResponseData: dataResponse,
+		ErrorData:    err,
 	}
 }
