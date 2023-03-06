@@ -30,6 +30,7 @@ func (a *GetAddressByCepAdapter) Execute(ctx context.Context, cep string) (dto.A
 		logger.Error("error while calling the api", err, zap.Any("execution", logger.NewLog(logger.NewJourney("createUser", ""), "GetAddressByCepAdapter.Execute()", "get_address_by_cep_adapter", "calling api", true, cep, "", err)))
 		return nil, err
 	}
+	defer response.Body.Close()
 	var address clientResp.AddressResponse
 	err = json.NewDecoder(response.Body).Decode(&address)
 	if err != nil {
