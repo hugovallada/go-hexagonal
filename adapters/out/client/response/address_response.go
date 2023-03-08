@@ -31,3 +31,26 @@ func (ar AddressResponse) GetCidade() string {
 func (ar AddressResponse) GetEstado() string {
 	return ar.Estado
 }
+
+func (ar *AddressResponse) SetCep(cep string) {
+	ar.Cep = cep
+}
+
+func (ar *AddressResponse) SetRua(rua string) {
+	ar.Rua = rua
+}
+
+func (ar *AddressResponse) SetComplemento(complemento string) {
+	ar.Complemento = complemento
+}
+
+func (ar *AddressResponse) SetBairro(bairro string) {
+	ar.Bairro = bairro
+}
+
+func (ar *AddressResponse) SetCidade(cidade string) {
+	ar.Cidade = cidade
+}
+func (ar *AddressResponse) SetEstado(estado string) {
+	ar.Estado = estado
+}

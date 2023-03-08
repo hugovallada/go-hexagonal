@@ -16,7 +16,7 @@ func (u *UserRequest) GetLastName() string {
 	return u.LastName
 }
 
-func (u *UserRequest) GetBirthday() string {
+func (u *UserRequest) GetBirthDay() string {
 	return u.Birthday
 }
 

@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/hugovallada/golang-hexagonal-architecture/adapters/in/controller/models"
-	"github.com/hugovallada/golang-hexagonal-architecture/application/core/dto"
+	"github.com/hugovallada/golang-hexagonal-architecture/application/core/entity/model"
 	"github.com/hugovallada/golang-hexagonal-architecture/application/core/ports/in"
 	"github.com/hugovallada/golang-hexagonal-architecture/configuration/logger"
 	"go.uber.org/zap"
@@ -39,6 +39,7 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(500, "error while creating the new user")
 		return
 	}
-	logger.Info("User created...", zap.Any("info", logger.NewLog[*models.UserRequest, dto.UserEntity, error](logger.NewJourney("createUser", ""), "CreateUser", FILENAME, "Request to create new user", false, userRequest, user, nil)))
-	ctx.JSON(201, user)
+	logger.Info("User created...", zap.Any("info", logger.NewLog[*models.UserRequest, model.UserModel, error](logger.NewJourney("createUser", ""), "CreateUser", FILENAME, "Request to create new user", false, userRequest, user, nil)))
+	userResponse := models.NewUserResponse(user)
+	ctx.JSON(201, userResponse)
 }
